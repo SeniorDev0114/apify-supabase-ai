@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { deleteRecord, updateRecordAnalysis } from '@/lib/supabase-storage';
 import { analyzeContent } from '@/lib/openai';
 import { supabaseAnon } from '@/lib/supabase';
@@ -22,6 +23,9 @@ export async function DELETE(
     }
 
     await deleteRecord(id);
+    
+    // Revalidate the page to show updated data
+    revalidatePath('/');
     
     return NextResponse.json({
       ok: true,
@@ -82,6 +86,9 @@ export async function POST(
       
       // Update the record with analysis
       const updated = await updateRecordAnalysis(id, analysis);
+      
+      // Revalidate the page to show updated data
+      revalidatePath('/');
       
       return NextResponse.json({
         ok: true,

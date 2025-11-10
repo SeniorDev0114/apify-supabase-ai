@@ -2,6 +2,10 @@ import { supabaseAnon } from '@/lib/supabase';
 import { ActionButtons } from './components/ActionButtons';
 import { RecordItem } from './components/RecordItem';
 
+// Force dynamic rendering to prevent caching issues in production
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 async function fetchRecords() {
   const { data } = await supabaseAnon
     .from('records')

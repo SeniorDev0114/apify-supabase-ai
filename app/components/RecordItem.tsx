@@ -47,7 +47,10 @@ export function RecordItem({ record }: { record: Record }) {
 
         showSuccess('Record deleted successfully');
         // Refresh the page to update the list
-        router.refresh();
+        // Add small delay to ensure server-side revalidation completes
+        setTimeout(() => {
+          router.refresh();
+        }, 100);
       } catch (error: any) {
         showError(`Failed to delete record: ${error.message || 'Unknown error'}`);
       }
@@ -71,7 +74,10 @@ export function RecordItem({ record }: { record: Record }) {
 
         showSuccess('Record analyzed successfully');
         // Refresh the page to show updated analysis
-        router.refresh();
+        // Add small delay to ensure server-side revalidation completes
+        setTimeout(() => {
+          router.refresh();
+        }, 100);
       } catch (error: any) {
         showError(`Failed to analyze record: ${error.message || 'Unknown error'}`);
       }
